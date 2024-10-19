@@ -1,6 +1,7 @@
 version: '3.9'
 services:
   nestjs_app:
+    image: muso/nestjs_app:1.0.0
     container_name: nestjs_crud_app
     build:
       context: .
@@ -12,7 +13,7 @@ services:
       - PG_USER=postgres
       - PG_PASSWORD=postgres
       - PG_DB=postgres
-      - PG_PORT=5432
+      - PG_PORT=5433
       - PG_HOST=db
     depends_on:
       - nestjs_db
