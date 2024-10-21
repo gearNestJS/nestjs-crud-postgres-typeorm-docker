@@ -13,7 +13,7 @@ services:
       - PG_USER=postgres
       - PG_PASSWORD=postgres
       - PG_DB=postgres
-      - PG_PORT=5433
+      # - PG_PORT=5433
       - PG_HOST=nestjs_db
     depends_on:
       - nestjs_db

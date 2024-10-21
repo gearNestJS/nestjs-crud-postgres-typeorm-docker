@@ -21,11 +21,12 @@ export class UsersController {
   }
 
   @Get(':id')
-  async findUniqueUser(@Param('id') id: number): Promise<User> {
-    const user: User = await this.usersService.findUniqueUser(id);
+  async findUniqueUser(@Param('id') id: string): Promise<User> {
+    const user: User = await this.usersService.findUniqueUser(Number(id));
     if (!user) {
-      throw new NotFoundException('User not found!');
+      throw new NotFoundException(`User with id ${id} not found!`);
     }
+
     return user;
   }
 
@@ -34,24 +35,26 @@ export class UsersController {
     return this.usersService.createNewUser(user);
   }
 
-  @Put('id')
+  @Put(':id')
   async updateUser(
     @Body() updateUser: User,
-    @Param('id') id: number,
+    @Param('id') id: string,
   ): Promise<User> {
-    const findUser: User = await this.usersService.findUniqueUser(id);
+    const findUser: User = await this.usersService.findUniqueUser(Number(id));
     if (!findUser) {
-      throw new NotFoundException('User not found!');
+      throw new NotFoundException(`User with id ${id} not found!`);
     }
-    return this.usersService.updateUser(id, updateUser);
+
+    return this.usersService.updateUser(Number(id), updateUser);
   }
 
-  @Delete('id')
-  async removeUser(@Param('id') id: number): Promise<void> {
-    const findUser: User = await this.usersService.findUniqueUser(id);
+  @Delete(':id')
+  async removeUser(@Param('id') id: string): Promise<void> {
+    const findUser: User = await this.usersService.findUniqueUser(Number(id));
     if (!findUser) {
-      throw new NotFoundException('User not found!');
+      throw new NotFoundException(`User with id ${id} not found!`);
     }
-    return this.removeUser(id);
+
+    return this.usersService.removeUser(Number(id));
   }
 }
